@@ -1,6 +1,31 @@
 local plugins = {
- 
-  -- ...
+  {
+    "nvimtools/none-ls.nvim",
+    ft = {"python"},
+    opts = function()
+      return require "custom.configs.null-ls"
+    end,
+  },
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "black",
+        "debugpy",
+        "mypy",
+        "ruff",
+        "pyright",
+      },
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require "plugins.configs.lspconfig"
+      require "custom.configs.lspconfig"
+    end,
+  },
+  --
   {
     "lervag/vimtex",
     ft = { "tex" },
@@ -16,6 +41,18 @@ local plugins = {
       vim.g.vimtex_view_skim_activate =1
       -- vim.g.snipmate_snippets_path = '~/.config/snippets/'
     end,
+  },
+  {
+    "github/copilot.vim",
+    lazy = false,
+    config = function()
+      -- Mapping tab is already used by NvChad
+      vim.g.copilot_no_tab_map = true;
+      vim.g.copilot_assume_mapped = true;
+      vim.g.copilot_tab_fallback = "";
+      -- The mapping is set to other key, see custom/lua/mappings
+      -- or run <leader>ch to see copilot mapping section
+    end
   },
   {
   "iurimateus/luasnip-latex-snippets.nvim",
